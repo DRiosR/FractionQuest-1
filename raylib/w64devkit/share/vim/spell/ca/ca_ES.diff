@@ -1,0 +1,83 @@
+*** ca_ES.orig.aff	Sat Aug 13 18:33:44 2005
+--- ca_ES.aff	Tue Jan 10 18:06:05 2006
+***************
+*** 44,48 ****
+  
+! # substitucions preferides
+! FIRST a/� e/�/� �/�/e �/�/e i/�/� �/i/� o/�/� �/�/o �/�/o u/�/� �/u/� �/u/�
+! FIRST l/l�l l�l/l
+  
+--- 44,65 ----
+  
+! FOL  ��������������������������������
+! LOW  ��������������������������������
+! UPP  ��������������������������������
+! 
+! SOFOFROM abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ�������������������������������������������������������������޿
+! SOFOTO   ebctefghejklnnepkrstevvkesebctefghejklnnepkrstevvkeseeeeeeeceeeeeeeedneeeeeeeeeeepseeeeeeeeceeeeeeeedneeeeeeeeeeep?
+! 
+! MIDWORD	�-'
+! 
+! MAP 6
+! MAP a������
+! MAP e����
+! MAP i����
+! MAP o�����
+! MAP u����
+! MAP c�
+! 
+! REP 2
+! REP l l�l
+! REP l�l l
+  
+*** ca_ES.orig.dic	Sat Aug 13 18:33:44 2005
+--- ca_ES.dic	Thu Apr 20 20:31:16 2006
+***************
+*** 1,2 ****
+! 149661
+  a/VY
+--- 1,2 ----
+! 149665
+  a/VY
+***************
+*** 25312,25314 ****
+  caos/E
+- cap
+  cap-rodo/E
+--- 25312,25313 ----
+***************
+*** 35103,35105 ****
+  corrasi�/G
+- corre
+  corre-corrents
+--- 35102,35103 ----
+***************
+*** 99806,99808 ****
+  maj�scul/F
+- mal
+  mal-llevat/E
+--- 99804,99805 ----
+***************
+*** 107517,107519 ****
+  not�riament
+- nou
+  nou-centes/E
+--- 107514,107515 ----
+***************
+*** 122687,122689 ****
+  rat�nia/E
+- rau
+  rau-rau/E
+--- 122683,122684 ----
+***************
+*** 139389,139391 ****
+  ta�t/E
+- te
+  te'l
+--- 139384,139385 ----
+***************
+*** 147590,147592 ****
+  vit�cola/E
+- viu
+  viu-viu/E
+--- 147584,147585 ----

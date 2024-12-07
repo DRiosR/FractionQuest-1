@@ -1,0 +1,204 @@
+*** el_GR.orig.aff	Tue Aug 16 18:02:27 2005
+--- el_GR.aff	Thu Sep 29 22:28:12 2005
+***************
+*** 572,574 ****
+  SFX J �     �����      .          # ���� > ��������
+! 	 
+  SFX K Y 4 
+--- 572,574 ----
+  SFX J �     �����      .          # ���� > ��������
+!          
+  SFX K Y 4 
+***************
+*** 619,621 ****
+  
+! 	 
+  SFX R Y 4
+--- 619,621 ----
+  
+!          
+  SFX R Y 4
+***************
+*** 626,628 ****
+  
+! 	 
+  SFX S Y 4
+--- 626,628 ----
+  
+!          
+  SFX S Y 4
+***************
+*** 646,648 ****
+  
+! 	 
+  SFX V Y 5
+--- 646,648 ----
+  
+!          
+  SFX V Y 5
+***************
+*** 686,688 ****
+  
+! 	 
+  SFX b Y 4
+--- 686,688 ----
+  
+!          
+  SFX b Y 4
+***************
+*** 758 ****
+--- 758,911 ----
+  SFX n ��         �           .        # ������ > �����
++ 
++ # sound folding from Aspell
++ # version 0.0 03/14/2002
++ # 03/14/2002 Evripidis Papakostas <evris@source.gr>
++ 
++ # all the following double letters are pronounced as one
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��                         ��
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL ��                         �
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL ��                         �
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _
++ SAL �                          �
++ SAL ��-                        _ 
++ SAL �                          �
++ 
++ # alpha + (ypsilon or ypsilon tonos) becomes alpha + beta
++ SAL ��<                        ��
++ SAL ����--                     ��
++ SAL ����--                     ��
++ SAL ����--                     ��
++ SAL ��(�������)-               ��
++ SAL ���                        ��
++ SAL ��(������ն������)-        ��
++ 
++ # alpha + (ypsilon or ypsilon tonos) becomes alpha + phi
++ SAL ���                        ��
++ SAL ����--                     ��
++ SAL ��(������)-                ��
++ SAL ���-                       ��
++ SAL ���-                       ��
++ 
++ # alpha + (iota or iota tonos) becomes epsilon
++ SAL �(ɺ)                      �
++ 
++ # alpha is alpha
++ SAL �                          �
++ 
++ # epsilon + (ypsilon or ypsilon tonos) becomes epsilon + vita
++ SAL ž<                        �
++ SAL ����--                     ��
++ SAL ����--                     ��
++ SAL ����--                     ��
++ SAL ��(�������)-               ��
++ SAL ���                        ��
++ SAL ��(������ն������)-        ��
++ 
++ # epsilon + (ypsilon or ypsilon tonos) becomes epsilon + phi
++ SAL ���                        ��
++ SAL ����--                     ��       # GUESSED!
++ SAL ��(������)-                ��
++ SAL ���-                       ��
++ SAL ���-                       ��
++ 
++ # epsilon + (iota or iota tonos) becomes iota
++ SAL �(ɺ)                      �
++ 
++ # epsilon is epsilon
++ SAL �                          �
++ 
++ 
++ # omikron + (iota or iota tonos) becomes iota
++ SAL �(ɺ)                      �
++ 
++ # omikron + (ypsilon or ypsilon tonos) becomes u
++ SAL �(վ)                      ��
++ 
++ # omikron is omikron
++ SAL �                          �
++ 
++ # wmega becomes omikron
++ SAL �                          �
++ 
++ # ita becomes iota
++ SAL �                          �
++ 
++ # ypsilon + iota becomes iota
++ SAL ��                         �
++ 
++ # ypsilon becomes iota
++ SAL �                          �
++ 
++ # iota is iota
++ SAL �                          �
++ 
++ # double ksi becomes ksi 
++ SAL ��-                         _
++ 
++ # ksi + sigma becomes ksi 
++ SAL ��                         �
++ 
++ # ksi is ksi
++ SAL �                          �
++ 
++ # psi + psi becomes psi
++ SAL ��-                        _
++ 
++ # psi + sigma becomes psi
++ SAL ��                         �
++ 
++ # psi is psi
++ SAL �                          �
++ 
++ 
++ # iota dialitika becomes iota 
++ SAL �                          �
++ 
++ # ypsilon dialitika becomes I
++ SAL �                          �
++ 
++ # alpha tonos becomes alpha
++ SAL �                          �
++ 
++ # omikron tonos becomes omikron
++ SAL �                          �
++ 
++ # iota tonos becomes iota
++ SAL �                          �
++ 
++ # epsilon tonos becomes epsilon
++ SAL �                          �
++ 
++ # ypsilon tonos becomes ypsilon
++ SAL �                          �
++ 
++ # wmega tonos becomes omikron
++ SAL �                          �
++ 
++ # ita tonos becomes iota
++ SAL �                          �

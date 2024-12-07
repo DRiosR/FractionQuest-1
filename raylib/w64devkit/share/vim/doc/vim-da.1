@@ -1,0 +1,555 @@
+.TH VIM 1 "11. april 2006"
+.SH NAVN
+vim \- Vi IMproved, en programm�rs teksteditor
+.SH SYNOPSIS
+.br
+.B vim
+[tilvalg] [fil ..]
+.br
+.B vim
+[tilvalg] \-
+.br
+.B vim
+[tilvalg] \-t tag
+.br
+.B vim
+[tilvalg] \-q [fejlfil]
+.PP
+.br
+.B ex
+.br
+.B view
+.br
+.B gvim
+.B gview
+.B evim
+.B eview
+.br
+.B rvim
+.B rview
+.B rgvim
+.B rgview
+.SH BESKRIVELSE
+.B Vim
+er en teksteditor som er opad kompatibel med Vi.
+Den kan bruges til at redigere alle slags ren tekst.
+Den er s�rlig nyttig til at redigere programmer.
+.PP
+Der er mange forbedringer over Vi: multiniveau fortryd,
+multivinduer og -buffere, syntaksfremh�vning, redigering af kommandolinje,
+fuldf�relse af filnavn, onlinehj�lp, visuel markering, osv.
+Se ":help vi_diff.txt" for et overblik over forskellene mellem
+.B Vim
+og Vi.
+.PP
+Mens
+.B Vim
+k�rer, kan der indhentes massere af hj�lp fra online-hj�lpesystemet, med
+":help"-kommandoen.
+Se ONLINEHJ�LP-sektionen nedenfor.
+.PP
+Oftest startes
+.B Vim
+for at redigere en enkelt fil med kommandoen
+.PP
+	vim fil
+.PP
+Mere generelt startes
+.B Vim
+med:
+.PP
+	vim [tilvalg] [filliste]
+.PP
+Hvis fillisten mangler, s� startes editoren med en tom buffer.
+Ellers kan �n af f�lgende fire m�der bruges til at v�lge en eller
+flere filer som skal redigeres.
+.TP 12
+fil ..
+En liste over filnavne.
+Den f�rste bliver den nuv�rende fil og l�ses ind i bufferen.
+Mark�ren placeres p� den f�rste linje i bufferen.
+Du kan g� til de andre filer med ":next"-kommandoen. Skriv "\-\-" foran
+fillisten, for at redigere en fil som begynder med en bindestreg.
+.TP
+\-
+Filen som skal redigeres l�ses fra stdin. Kommandoer l�ses fra stderr, hvilket
+skal v�re en tty.
+.TP
+\-t {tag}
+Filen som skal redigeres og den indledende mark�rplacering afh�nger af
+et "tag", en slags g� til-etiket.
+{tag} opsl�s i tags-filen, den tilknyttede fil bliver den nuv�rende
+fil og den tilknyttede kommando udf�res.
+Det bruges mest til C-programmer, hvor {tag} kunne v�re et
+funktionsnavn.
+Virkningen er at filen som indeholder funktionen bliver den nuv�rende fil
+og mark�ren placeres i begyndelsen af funktionen.
+Se ":help tag\-commands".
+.TP
+\-q [fejlfil]
+Start i quickFix-tilstand.
+Filen [fejlfil] l�ses og den f�rste fejl vises.
+Hvis [fejlfil] udelades, s� indhentes filnavnet fra 'errorfile'-valgmuligheden
+(standard er "AztecC.Err" p� Amiga, "errors.err" p� andre
+systemer).
+Der kan hoppes til yderligere fejl med ":cn"-kommandoen.
+Se ":help quickfix".
+.PP
+.B Vim
+opf�rer sig anderledes, afh�ngig af navnet p� kommandoen (eksekverbaren kan
+stadig v�re den samme fil).
+.TP 10
+vim
+Den "normale" m�de, alt er standard.
+.TP
+ex
+Start i Ex-tilstand.
+G� til normal tilstand med ":vi"-kommandoen.
+Det kan ogs� g�res med "\-e"-argumentet.
+.TP
+view
+Start i skrivebeskyttet tilstand. Du vil v�re beskyttet mod at skrive filerne.
+Det kan ogs� g�res med "\-R"-argumentet.
+.TP
+gvim gview
+GUI-versionen.
+Starter et nyt vindue.
+Det kan ogs� g�res med "\-g"-argumentet.
+.TP
+evim eview
+GUI-versionen i easy-tilstand.
+Starter et nyt vindue.
+Det kan ogs� g�res med "\-y"-argumentet.
+.TP
+rvim rview rgvim rgview
+Som dem ovenfor, men med restriktioner. Det vil ikke v�re muligt at starte
+skalkommandoer, eller at suspendere
+.B Vim\c
+\&.
+Det kan ogs� g�res med "\-Z"-argumentet.
+.SH TILVALG
+Tilvalgene kan gives i vilk�rlig r�kkef�lge, f�r eller efter filnavnene.
+Tilvalg uden et argument kan kombineres efter en enkelt bindestreg.
+.TP 12
++[nummer]
+Ved den f�rste fil, placeres mark�ren p� linje "nummer".
+Hvis "nummer" mangler, s� placeres mark�ren p� den sidste linje.
+.TP
++/{sti}
+Ved den f�rste fil, placeres mark�ren p� linjen med den
+f�rste forekomst af {sti}.
+Se ":help search\-pattern" for tilg�ngelige s�gem�nstre.
+.TP
++{kommando}
+.TP
+\-c {kommando}
+{kommando} udf�res efter den f�rste fil er blevet l�st.
+{kommando} fortolkes som en Ex-kommando.
+Hvis {kommando} indeholder mellemrum, s� skal den omsluttes af
+dobbelte citationstegn (det afh�nger af den skal der bruges).
+Eksempel: vim "+set si" main.c
+.br
+Bem�rk: Du kan bruge op til 10 "+"- eller "\-c"-kommandoer.
+.TP
+\-S {fil}
+{fil} bliver sourced efter den f�rste fil er blevet l�st.
+Det svarer til \-c "source {fil}".
+{fil} m� ikke begynde med '\-'.
+Hvis {fil} udelades, s� bruges "Session.vim" (virker kun n�r \-S er det sidste
+argument).
+.TP
+\-\-cmd {kommando}
+Ligesom at bruge "\-c", men kommandoen udf�res lige inden
+behandlingen af vimrc-filer.
+Du kan bruge op til 10 af disse kommandoer, uafh�ngigt af "\-c"-kommandoer.
+.TP
+\-A
+Hvis
+.B Vim
+blev kompileret med underst�ttelse af ARABIC til redigering af filer som er
+orienteret h�jre mod venstre og arabisk tastaturlayout, s� starter tilvalget
+.B Vim
+i arabisk tilstand, dvs. 'arabic' s�ttes.
+Ellers gives en fejlmeddelelse og
+.B Vim
+afbrydes.
+.TP
+\-b
+Bin�r tilstand.
+Der s�ttes nogle f� valgmuligheder som g�r det muligt at redigere en
+bin�r eller eksekverbar fil.
+.TP
+\-C
+Kompatibel. S�t 'compatible'-valgmuligheden.
+Det f�r
+.B Vim
+til at opf�re sig mest som Vi, selvom der findes en .vimrc-fil.
+.TP
+\-d
+Start i diff-tilstand.
+Der skal v�re to, tre eller fire filnavneargumenter.
+.B Vim
+�bner alle filerne og viser forskellene mellem dem.
+Virker ligesom vimdiff(1).
+.TP
+\-d {enhed}
+�bn {enhed} til brug som en terminal.
+Kun p� Amiga.
+Eksempel:
+"\-d con:20/30/600/150".
+.TP
+\-D
+Fejlretning. G� til fejlretningstilstand n�r den f�rste kommando udf�res fra
+et script.
+.TP
+\-e
+Start
+.B Vim
+i Ex-tilstand, ligesom hvis "ex"-eksekverbaren blev kaldt.
+.TP
+\-E
+Start
+.B Vim
+i forbedret Ex-tilstand, ligesom hvis "exim"-eksekverbaren blev kaldt.
+.TP
+\-f
+Forgrund. I GUI-versionen, vil
+.B Vim
+ikke fork'e og frig�re fra skallen som den blev startet i.
+P� Amiga, genstartes
+.B Vim
+ikke for at �bne et nyt vindue.
+Tilvalget b�r bruges n�r
+.B Vim
+udf�res af et program der venter p� at redigeringssession
+bliver f�rdig (f.eks. mail).
+P� Amiga virker ":sh"- og ":!"-kommandoerne ikke.
+.TP
+\-\-nofork
+Forgrund. I GUI-versionen, vil
+.B Vim
+ikke fork'e og frig�re fra skallen som den blev startet i.
+.TP
+\-F
+Hvis
+.B Vim
+blev kompileret med underst�ttelse af FKMAP til redigering af filer som er
+orienteret h�jre mod venstre og persisk tastaturlayout, s� starter tilvalget
+.B Vim
+i persisk tilstand, dvs. 'fkmap' og 'rightleft' s�ttes.
+Ellers gives en fejlmeddelelse og
+.B Vim
+afbrydes.
+.TP
+\-g
+Hvis
+.B Vim
+blev kompileret med underst�ttelse af GUI, s� aktiveres GUI'en af
+denne valgmulighed. Hvis underst�ttelse af GUI ikke blev kompileret ind,
+s� gives en fejlmeddelelse og
+.B Vim
+afbrydes.
+.TP
+\-h
+Giv lidt hj�lp om kommandolinjeargumenterne og tilvalgene.
+Herefter afsluttes
+.B Vim\c
+\&.
+.TP
+\-H
+Hvis
+.B Vim
+blev kompileret med underst�ttelse af RIGHTLEFT til redigering af filer som er
+orienteret h�jre mod venstre og hebraisk tastaturlayout, s� starter tilvalget
+.B Vim
+i hebraisk tilstand, dvs. 'hkmap' og 'rightleft' s�ttes.
+Ellers gives en fejlmeddelelse og
+.B Vim
+afbrydes.
+.TP
+\-i {viminfo}
+N�r brug af viminfo-filen er aktiveret, s� s�tter tilvalget det
+filnavn som skal bruges, i stedet for standarden "~/.viminfo".
+Det kan ogs� bruges til at springe brugen af .viminfo-filen over,
+ved at give navnet "NONE".
+.TP
+\-L
+Samme som \-r.
+.TP
+\-l
+Lisp-tilstand.
+S�tter 'lisp'- og 'showmatch'-valgmulighederne til.
+.TP
+\-m
+�ndring af filer er deaktiveret.
+Nulstiller 'write'-valgmuligheden.
+Du kan stadig �ndre bufferen, men det er ikke muligt at skrive en fil.
+.TP
+\-M
+�ndringer tillades ikke. 'modifiable'- og 'write'-valgmulighederne fjernes,
+s� �ndringer ikke er tilladt og filer ikke kan skrives. Bem�rk at
+valgmulighederne kan s�ttes for at g�re det muligt at foretage �ndringer.
+.TP
+\-N
+No-compatible-tilstand. Nulstil 'compatible'-valgmuligheden.
+Det f�r
+.B Vim
+til at opf�re sig en smule bedre, men mindre Vi-kompatibel, selvom der ikke
+findes en .vimrc-fil.
+.TP
+\-n
+Der bruges ingen swap-fil.
+Det er umuligt at gendanne efter programmet er holdt op med at virke.
+God hvis du vil redigere en fil p� et meget langsomt medie (f.eks. floppy).
+Kan ogs� g�res med ":set uc=0".
+Kan fortrydes med ":set uc=200".
+.TP
+\-nb
+Bliv en editor-server til NetBeans. Se dokumentationen for detaljer.
+.TP
+\-o[N]
+�bn N vinduer stablet.
+N�r N udelades, s� �bnes �t vindue pr. fil.
+.TP
+\-O[N]
+�bn N vinduer side om side.
+N�r N udelades, s� �bnes �t vindue pr. fil.
+.TP
+\-p[N]
+�bn N fanebladssider.
+N�r N udelades, s� �bnes �n fanebladsside pr. fil.
+.TP
+\-R
+Skrivebeskyttet tilstand.
+\&'readonly'-valgmuligheden s�ttes.
+Du kan stadig redigere bufferen, men vil v�re forhindret i
+fejlagtigt at overskrive en fil.
+Hvis du vil overskrive en fil, s� tilf�j et
+udr�bstegn til Ex-kommandoen, som i ":w!".
+\-R-tilvalget indeb�rer ogs� \-n-tilvalget (se ovenfor).
+\&'readonly'-valgmuligheden kan sl�s fra med ":set noro".
+Se ":help 'readonly'".
+.TP
+\-r
+Oplist swap-filer, med information om at bruge dem til gendannelse.
+.TP
+\-r {fil}
+Gendannelsestilstand.
+Swap-filen bruges til at gendanne en redigeringssession som holdt
+op med at virke. Swap-filen er en fil med det samme filnavn som tekstfilen,
+med ".swp" tilf�jet i slutningen.
+Se ":help recovery".
+.TP
+\-s
+Stille tilstand. Kun n�r der startes som "Ex" eller
+n�r "\-e"-tilvalget blev givet inden "\-s"-tilvalget.
+.TP
+\-s {scriptind}
+Script-filen {scriptind} l�ses.
+Tegnene i filen fortolkes som havde du skrevet dem.
+Det samme kan g�res med kommandoen ":source! {scriptind}".
+Hvis slutningen af filen n�s inden editoren afslutter,
+s� l�ses yderligere tegn fra tastaturet.
+.TP
+\-T {terminal}
+Fort�ller
+.B Vim
+navnet p� terminalen som du bruger.
+Kr�ves kun n�r den automatisk m�de ikke virker.
+Skal v�re en terminal som kendes af
+.B Vim
+(indbygget) eller defineret i termcap- eller terminfo-filen.
+.TP
+\-u {vimrc}
+Brug kommandoerne i {vimrc}-filen til initialiseringer.
+Alle de andre initialiseringer springes over.
+Brug den til at redigere en s�rlig slags filer.
+Den kan ogs� bruges til at springe alle initialiseringer over,
+ved at give navnet "NONE". Se ":help initialization" i vim for flere detaljer.
+.TP
+\-U {gvimrc}
+Brug kommandoerne i {gvimrc}-filen til GUI-initialiseringer.
+Alle de andre GUI-initialiseringer springes over.
+Den kan ogs� bruges til at springe alle GUI-initialiseringer over,
+ved at give navnet "NONE". Se ":help gui\-init" i vim for flere detaljer.
+.TP
+\-V[N]
+Uddybende. Giv meddelelser om hvilke filer som er sourced og til l�sning og
+skrivning af en viminfo-fil. Det valgfrie nummer N er v�rdien af 'verbose'.
+Standard er 10.
+.TP
+\-v
+Start
+.B Vim
+i Vi-tilstand, ligesom eksekverbaren kaldet "vi". Det har kun virkning n�r
+eksekverbaren kaldes "ex".
+.TP
+\-w {scriptud}
+Alle tegnene som du skrev optages i filen {scriptud}, indtil du afslutter
+.B Vim\c
+\&.
+Det er nyttigt hvis du vil oprette en script-fil som skal bruges med
+"vim \-s" eller ":source!".
+Hvis {scriptud}-filen findes, s� tilf�jes tegnene til slutningen.
+.TP
+\-W {scriptud}
+Ligesom \-w, men en eksisterende fil overskrives.
+.TP
+\-x
+Brug kryptering n�r der skrives filer. Sp�rger efter en krypteringsn�gle.
+.TP
+\-X
+Opret ikke forbindelse til X-serveren. Afkorter opstartstiden i en terminal,
+men vinduets titel og udklipsholder bruges ikke.
+.TP
+\-y
+Start
+.B Vim
+i easy-tilstand, ligesom hvis "evim"- eller "eview"-eksekverbarene blev kaldt.
+F�r
+.B Vim
+til at opf�re sig som en klik og skriv-editor.
+.TP
+\-Z
+Restriktiv tilstand. Virker ligesom eksekverbaren som begynder med "r".
+.TP
+\-\-
+Betegner slutningen af tilvalgene.
+Argumenter efter dette h�ndteres som et filnavn.
+Det kan bruges til at redigere et filnavn som begynder med et '\-'.
+.TP
+\-\-echo\-wid
+Kun GTK GUI: Ekko vinduets id p� stdout.
+.TP
+\-\-help
+Giv en hj�lpemeddelelse og afslut, ligesom "\-h".
+.TP
+\-\-literal
+Tag filnavnets argumenter bogstaveligt, udvid ikke jokertegn.
+Det har ingen virkning i Unix hvor skallen udvidder jokertegn.
+.TP
+\-\-noplugin
+Spring indl�sning af plugins over. Indeb�res af \-u NONE.
+.TP
+\-\-remote
+Opret forbindelse til en Vim-server og f� den til at redigere filerne
+som gives i resten af argumenterne. Hvis der ikke findes nogen server,
+s� gives der en advarsel og filerne redigeres i den nuv�rende Vim.
+.TP
+\-\-remote\-expr {udtryk}
+Opret forbindelse til en Vim-server, evaluer
+{udtryk} i den og udskriv resultatet p� stdout.
+.TP
+\-\-remote\-send {n�gler}
+Opret forbindelse til en Vim-server and send {n�gler} til den.
+.TP
+\-\-remote\-silent
+Som \-\-remote, men uden advarslen n�r der ikke findes nogen server.
+.TP
+\-\-remote\-wait
+Som \-\-remote, men Vim afslutter ikke f�r filerne er blevet redigeret.
+.TP
+\-\-remote\-wait\-silent
+Som \-\-remote\-wait, men uden advarslen n�r der ikke findes nogen server.
+.TP
+\-\-serverlist
+Oplist navnene p� alle Vim-servere som der kan findes.
+.TP
+\-\-servername {navn}
+Brug servernavnet {navn}. Bruges til den nuv�rende Vim,
+medmindre det bruges med et \-\-remote-argument,
+s� er det navnet p� serveren som der skal oprettes forbindelse til.
+.TP
+\-\-socketid {id}
+Kun GTK GUI: Brug GtkPlug-mekanismen til at k�re gvim i et andet vindue.
+.TP
+\-\-version
+Udskriv versionsinformation og afslut.
+.SH ONLINEHJ�LP
+Skriv ":help" i
+.B Vim
+for at begynde.
+Skriv ":help emne" for at f� hj�lp til et bestemt emne.
+F.eks.: ":help ZZ" for at f� hj�lpe til "ZZ"-kommandoen.
+Brug <Tab> og CTRL-D for at fuldf�re emner (":help cmdline\-completion").
+Tags findes til at hoppe fra et sted til et andet (en slags hypertekst-links,
+se ":help").
+Alle dokumentationsfiler kan vises p� denne m�de, f.eks.
+":help syntax.txt".
+.SH FILER
+.TP 15
+/usr/local/lib/vim/doc/*.txt
+.B Vim\c
+-dokumentationsfilerne.
+Brug ":help doc\-file\-list" for at f� den fulde liste.
+.TP
+/usr/local/lib/vim/doc/tags
+Tags-filen som bruges til at finde information i dokumentationsfilerne.
+.TP
+/usr/local/lib/vim/syntax/syntax.vim
+Systembrede syntaksinitialiseringer.
+.TP
+/usr/local/lib/vim/syntax/*.vim
+Syntaksfiler til diverse sprog.
+.TP
+/usr/local/lib/vim/vimrc
+Systembrede
+.B Vim\c
+-initialiseringer.
+.TP
+~/.vimrc
+Dine personlige
+.B Vim\c
+-initialiseringer.
+.TP
+/usr/local/lib/vim/gvimrc
+Systembrede gvim-initialiseringer.
+.TP
+~/.gvimrc
+Dine personlige gvim-initialiseringer.
+.TP
+/usr/local/lib/vim/optwin.vim
+Script som bruges til ":options"-kommandoen,
+en god m�de til at vise og s�tte valgmuligheder.
+.TP
+/usr/local/lib/vim/menu.vim
+Systembrede menu-initialiseringer til gvim.
+.TP
+/usr/local/lib/vim/bugreport.vim
+Script til at generere en fejlrapport. Se ":help bugs".
+.TP
+/usr/local/lib/vim/filetype.vim
+Script til at registrere filtypen ud fra navnet. Se ":help 'filetype'".
+.TP
+/usr/local/lib/vim/scripts.vim
+Script til at registrere filtypen ud fra indholdet. Se ":help 'filetype'".
+.TP
+/usr/local/lib/vim/print/*.ps
+Filer som bruges til PostScript-udskrivning.
+.PP
+L�s VIM-hjemmesiden for seneste info:
+.br
+<URL:http://www.vim.org/>
+.SH SE OGS�
+vimtutor(1)
+.SH FORFATTER
+Det meste af
+.B Vim
+blev lavet af Bram Moolenaar, med en masse hj�lp fra andre.
+Se ":help credits" i
+.B Vim\c
+\&.
+.br
+.B Vim
+er baseret p� Stevie, arbejdet p� af: Tim Thompson,
+Tony Andrews og G.R. (Fred) Walter.
+Selvom der n�sten ikke er noget af den originale kode tilbage.
+.SH FEJL
+Formodentligt.
+Se ":help todo" for en liste over kendte problemer.
+.PP
+Bem�rk at flere ting som af nogle kan anses som v�rende fejl,
+faktisk er pga. en for n�r reproduktion af Vi's opf�rsel.
+Og hvis du t�nker at andre ting er fejl "fordi Vi g�r det anderledes",
+s� kig n�rmere p� vi_diff.txt-filen (eller skriv :help vi_diff.txt i Vim).
+Se ogs� 'compatible'- og 'cpoptions'-valgmulighederne.

@@ -1,0 +1,24 @@
+*** ms_MY.orig.aff	Wed Aug 31 18:14:01 2005
+--- ms_MY.aff	Wed Aug 31 18:14:01 2005
+***************
+*** 25,26 ****
+--- 25,35 ----
+  
++ FOL  ��������������������������������
++ LOW  ��������������������������������
++ UPP  ��������������������������������
++ 
++ SOFOFROM abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ�������������������������������������������������������������޿
++ SOFOTO   ebctefghejklnnepkrstevvkesebctefghejklnnepkrstevvkeseeeeeeeceeeeeeeedneeeeeeeeeeepseeeeeeeeceeeeeeeedneeeeeeeeeeep?
++ 
++ MIDWORD -
++ 
+  PFX B Y 2 
+*** ms_MY.orig.dic	Wed Aug 31 18:14:01 2005
+--- ms_MY.dic	Wed Aug 31 18:14:01 2005
+***************
+*** 4939,4941 ****
+  datin
+- Dato’
+  datuk/b
+--- 4939,4940 ----

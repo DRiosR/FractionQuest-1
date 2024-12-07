@@ -1,0 +1,396 @@
+.TH XXD 1 "ao�t 1996" "Page de manuel pour xxd"
+.\"
+.\" 21st May 1996
+.\" Man page author:
+.\"    Tony Nugent <tony@sctnugen.ppp.gu.edu.au> <T.Nugent@sct.gu.edu.au>
+.\"    Changes by Bram Moolenaar <Bram@vim.org>
+.\"    French translation by David Blanchet <david.blanchet@free.fr> 2005-03
+.SH NOM
+.I xxd
+\- convertit en repr�sentation hexad�cimale et inversement.
+.SH SYNOPSIS
+.B xxd
+\-h[elp]
+.br
+.B xxd
+[options] [fichier_entree [fichier_sortie]]
+.br
+.B xxd
+\-r[evert] [options] [fichier_entree [fichier_sortie]]
+.SH DESCRIPTION
+.I xxd
+cr�e un fichier contenant la repr�sentation hexad�cimale d'un fichier
+binaire ou de l'entr�e standard.
+Il peut �galement convertir un fichier de codes hexad�cimaux en un fichier
+binaire.
+Comme
+.BR uuencode (1)
+et
+.BR uudecode (1)
+il permet la transmission de donn�es binaires dans une repr�sentation ASCII
+compatible avec le courrier �lectronique, mais a l'avantage de d�coder la
+sortie standard.
+De plus, il peut �tre utilis� pour appliquer des rustines � des fichiers
+binaires.
+.SH OPTIONS
+Si aucun
+.I fichier_entree
+n'est sp�cifi�, l'entr�e standard est utilis�e.
+Si
+.I fichier_entree
+correspond au caract�re
+.RB '\-'
+\, l'entr�e standard est employ�e comme source des donn�es en entr�e.
+Si aucun
+.I fichier_sortie
+n'est sp�cifi� (ou qu'un caract�re
+.RB '\-'
+est donn� � sa place), le r�sultat est envoy� sur la sortie standard.
+.PP
+NOTE : un analyseur paresseux est utilis�. Il ne v�rifie pas au-del� de la
+premi�re lettre de l'option, � moins que cette derni�re ne requiert un
+param�tre.
+L'espace entre l'option et son param�tre est optionnel.
+Les param�tres des options peuvent �tre sp�cifi�s en notation d�cimale,
+hexad�cimale ou octale.
+Ainsi
+.BR \-c8 ,
+.BR "\-c 8" ,
+.B \-c 010
+et
+.B \-cols 8
+sont tous �quivalents.
+.TP
+.IR \-a " | " \-autoskip
+active la fonctionnalit� "autoskip" : le caract�re '*' remplace les lignes
+d'octets nuls. D�sactiv�e par d�faut.
+.TP
+.IR \-b " | " \-bits
+Convertit en binaires plut�t qu'en hexad�cimal.
+Cette option �crit les octets comme une s�quence de "1" et de "0" au lieu
+d'une conversion en hexad�cimal traditionnel. Chaque ligne est pr�c�d�e par un
+num�ro de ligne en hexad�cimal et suivie de la repr�sentation ASCII (ou
+EBCDIC) correspondante. Les options \-r, \-p, \-i ne fonctionnent pas dans ce
+mode.
+.TP
+.IR "\-c cols " | " \-cols cols"
+place
+.RI < cols >
+octets par ligne. 16 par d�faut (\-i : 12, \-ps : 30, \-b : 6). Maximum 256.
+.TP
+.IR \-E " | " \-EBCDIC
+Passe le codage des caract�res de la colonne de droite de ASCII � EBCDIC.
+Cela ne change pas la repr�sentation hexad�cimale. Cette option est sans effet
+quand elle est utilis�e avec \-r, \-p or \-i.
+.TP
+.IR "\-g octets " | " \-groupsize octets"
+Regroupe les octets (deux chiffres hexad�cimaux ou huit chiffres binaires)
+par groupe de
+.RI < octets >
+\, s�par�s par des espaces blancs. Sp�cifiez
+.I \-g 0
+pour supprimer le regroupement.
+.RI < octets >
+vaut 2 par d�faut dans le mode normal et \fI1\fP en
+repr�sentation binaire. Le regroupement ne s'applique pas aux styles
+Postscript et Include.
+.TP
+.IR \-h " | " \-help
+Affiche un r�sum� des commandes disponibles et quitte. Aucune conversion n'est
+effectu�e.
+.TP
+.IR \-i " | " \-include
+produit une sortie dans le style #include (fichier C � inclure). La d�finition
+compl�te d'un tableau statique est �crite et est nomm�e d'apr�s le fichier
+d'origine, � moins que xxd lise depuis l'entr�e standard.
+.TP
+.IR "\-l long " | " \-len long"
+Arr�te apr�s l'�criture de
+.RI  < long >
+octets.
+.TP
+.IR \-p " | " \-ps " | " \-postscript " | " \-plain
+Produit une conversion continue dans le style Postscript (postscript continuous
+hexdump style).
+�galement connu sous le nom de � conversion brute � (plain hexdump style).
+.TP
+.IR \-r " | " \-revert
+Op�ration inverse : convertit un fichier hexad�cimal en un fichier binaire (ou
+applique une rustine � un fichier binaire).
+Si l'�criture n'a pas lieu sur la sortie standard, xxd �crit dans le fichier
+qu'il produit sans le tronquer. Utilisez la combinaison
+.I \-r \-p
+pour lire de l'hexad�cimal brut sans information sur le num�ro des lignes et
+sans format de colonnes particulier. Des espaces blancs et coupures de lignes
+suppl�mentaires sont autoris�s � n'importe quel endroit.
+.TP
+.I \-seek d�calage
+Utilis� apr�s l'option
+.IR \-r :
+inverse la conversion en ajoutant
+.RI < d�calage >
+aux positions dans le fichier donn�es dans le code hexad�cimal.
+.TP
+.I \-s [+][\-]d�calage
+D�bute au
+.RI < d�calage >
+absolu ou relatif dans fichier_entree.
+\fI+ \fRindique que le d�calage est relatif � la position courante dans
+l'entr�e standard (sans effet si la lecture n'a pas lieu sur l'entr�e
+standard). \fI\- \fRindique un d�calage en caract�res depuis la fin de
+l'entr�e (utilis� avec \fI+\fR, d�signe la position avant la position
+actuelle de l'entr�e standard).
+Sans l'option \-s, xxd d�marre � la position courante du fichier.
+.TP
+.I \-u
+Utilise des chiffres hexad�cimaux majuscules. La casse par d�faut est
+minuscule.
+.TP
+.IR \-v " | " \-version
+Affiche la version de xxd.
+.SH MISE EN GARDE
+.I xxd \-r
+effectue des op�rations internes un peu obscures lors de l'�valuation
+des informations sur les num�ros de lignes. Si le fichier de sortie est
+adressable, alors les num�ros de lignes au d�but de chaque ligne d'hexad�cimal
+peuvent �tre d�sordonn�es, des lignes peuvent manquer ou se chevaucher. Dans
+ces cas, xxd utilisera lseek(2) pour d�terminer la prochaine position. Si le
+fichier n'est pas adressable, seuls les vides sont autoris�s, et ils seront
+combl�s par des octets nuls.
+.PP
+.I xxd \-r
+ne g�n�re aucune erreur lors de l'analyse. Les probl�mes sont pass�s
+silencieusement.
+.PP
+Lors de l'�dition de la repr�sentation hexad�cimale, veuillez noter que
+.I xxd \-r
+ignore tout ce qui se trouve sur la ligne apr�s avoir lu suffisamment de
+donn�es hexad�cimales (voir l'option \-c). Cela signifie �galement que les
+modifications dans la colonne ASCII (ou EBCDIC) sont toujours ignor�es. La
+conversion inverse de donn�es hexad�cimales brutes (postscript) avec xxd \-r
+\-p ne d�pend pas d'un nombre correct de colonnes. Dans ce cas, tout ce qui
+ressemble � une paire de chiffres hexad�cimaux est interpr�t�.
+.PP
+Remarquez la diff�rence entre
+.br
+\fI% xxd \-i fichier\fR
+.br
+et
+.br
+\fI% xxd \-i < fichier\fR
+.PP
+.I xxd \-s \+seek
+peut diff�rer de
+.IR "xxd \-s seek" ,
+car lseek(2) est utilis� pour � revenir en arri�re �. Le '+' fait une
+diff�rence quand la source des donn�es est l'entr�e standard et si la position
+dans le fichier de l'entr�e standard n'est pas au d�but du fichier lorsque xxd
+est d�marr� et qu'il re�oit ses donn�es.
+L'exemple suivant peut vous aider � comprendre (ou bien vous perdre davantage
+encore !)...
+.PP
+Remettre l'entr�e standard au d�part avant de lire ; n�cessaire car 'cat' a
+d�j� lu jusqu'� la fin de l'entr�e standard.
+.br
+\fI% sh \-c 'cat > donnees_binaires; xxd \-s 0 > donnees_hexa' < fichier\fR
+.PP
+Convertir � partir de la position 0x480 (= 1024 + 128) du fichier.
+Le symbole '+' signifie "relativement � la position actuelle', ainsi 128 est
+ajout� aux 1024 octets comptabilis�s pour dd.
+.br
+\fI% sh \-c 'dd of=donnees_binaires bs=1k count=1; xxd \-s +128 >
+donnees_hexa' < fichier\fR
+.PP
+Convertir de fichier depuis la position 0x100 (= 1024 \- 768) du fichier.
+.br
+\fI% sh \-c 'dd of=donnees_binaires bs=1k count=1; xxd \-s +\-768 >
+donnees_hexa' < fichier\fR
+.PP
+Toutefois, cette situation est peu fr�quente et l'utilisation de '+' est
+rarement requise. L'auteur pr�f�re surveiller les effets de xxd avec strace(1)
+ou truss(1) quand \-s est employ�.
+.SH EXEMPLES
+Afficher la totalit� du
+.B fichier
+sauf les trois premi�res lignes (0x30 octets en hexad�cimal).
+.br
+\fI% xxd \-s 0x30 fichier\fR
+.PP
+afficher les trois derni�res lignes (0x30 octets en hexad�cimal) du
+.B fichier
+\.
+.br
+\fI% xxd \-s \-0x30 fichier\fR
+.PP
+.br
+Afficher 120 octets convertis en continu, avec 20 octets par ligne.
+.br
+\fI% xxd \-l 120 \-ps \-c 20 xxd\-fr.1\fR
+.br
+2e54482058584420312022616ffb742031393936
+.br
+22202250616765206465206d616e75656c20706f
+.br
+757220787864220a2e5c220a2e5c222032317374
+.br
+204d617920313939360a2e5c22204d616e207061
+.br
+676520617574686f723a0a2e5c2220202020546f
+.br
+6e79204e7567656e74203c746f6e79407363746e
+.br
+204e7567656e74203c746f6e79407363746e7567
+.br
+2e54482058584420312022417567757374203139
+.PP
+Convertir les 120 premiers octets de cette page de manuel avec 12 octets par
+ligne.
+.br
+\fI% xxd \-l 120 \-c 12 xxd\-fr.1\fR
+.br
+0000000: 2e54 4820 5858 4420 3120 2261  .TH XXD 1 "a
+.br
+000000c: 6ffb 7420 3139 3936 2220 2250  o.t 1996" "P
+.br
+0000018: 6167 6520 6465 206d 616e 7565  age de manue
+.br
+0000024: 6c20 706f 7572 2078 7864 220a  l pour xxd".
+.br
+0000030: 2e5c 220a 2e5c 2220 3231 7374  .\"..\" 21st
+.br
+000003c: 204d 6179 2031 3939 360a 2e5c   May 1996..\\
+.br
+0000048: 2220 4d61 6e20 7061 6765 2061  " Man page a
+.br
+0000054: 7574 686f 723a 0a2e 5c22 2020  uthor:..\"
+.br
+0000060: 2020 546f 6e79 204e 7567 656e    Tony Nugen
+.br
+000006c: 7420 3c74 6f6e 7940 7363 746e  t <tony@sctn
+.PP
+Afficher la date �crite au d�but du fichier xxd\-fr.1.
+.br
+\fI% xxd \-s 0x38 \-l 13 \-c 13 xxd.1\fR
+.br
+0000036: 3231 7374 204d 6179 2031 3939 36  21st May 1996
+.PP
+Copier
+.B fichier_entree
+vers
+.B fichier_sortie
+en ajoutant 100 octets de valeur 0x00 avant.
+.br
+\fI% xxd fichier_entree | xxd \-r \-s 100 \> fichier_sortie\fR
+.PP
+Patcher la date dans le fichier xxd.1
+.br
+\fI% echo '0000037: 3574 68' | xxd \-r \- xxd\-fr.1\fR
+.br
+\fI% xxd \-s 0x38 \-l 13 \-c 13 xxd\-fr.1\fR
+.br
+0000036: 3235 7468 204d 6179 2031 3939 36  25th May 1996
+.PP
+Cr�er un fichier de 65537 octets tous nuls (0x00),
+sauf le dernier qui vaut 'A' (0x41 en hexad�cimal).
+.br
+\fI% echo '010000: 41' | xxd \-r \> fichier\fR
+.PP
+.br
+Convertir le fichier de l'exemple pr�c�dent avec la fonctionnalit� "autoskip".
+.br
+\fI% xxd \-a \-c 12 fichier\fR
+.br
+0000000: 0000 0000 0000 0000 0000 0000  ............
+.br
+*
+.br
+000fffc: 0000 0000 40                   ....A
+.PP
+Cr�er un fichier d'un octet, contenant seulement le caract�re 'A'.
+Le nombre apr�s '\-r \-s' s'ajoute aux num�ros de lignes trouv�es dans le
+fichier ; les octets initiaux sont supprim�s.
+.br
+\fI% echo '010000: 41' | xxd \-r \-s \-0x10000 \> fichier\fR
+.PP
+Utiliser xxd comme filtre dans un �diteur tel que
+.B vim(1)
+pour convertir une zone comprise entre les marques 'a' et 'z'.
+.br
+\fI:'a,'z!xxd\fR
+.PP
+Utiliser xxd comme filtre dans un �diteur tel que
+.B vim(1)
+pour r�cup�rer une conversion binaire comprise entre les marques 'a' et 'z'.
+.br
+\fI:'a,'z!xxd \-r\fR
+.PP
+Utiliser xxd comme filtre dans un �diteur tel que
+.B vim(1)
+pour r�cup�rer une ligne convertie. Placez le curseur sur la ligne et tapez :
+.br
+\fI!!xxd \-r\fR
+.PP
+Lire des caract�res depuis une connexion s�rie :
+.br
+\fI% xxd \-c1 < /dev/term/b &\fR
+.br
+\fI% stty < /dev/term/b \-echo \-opost \-isig \-icanon min 1\fR
+.br
+\fI% echo \-n foo > /dev/term/b\fR
+.SH VALEURS DE RETOUR
+Les erreurs suivantes sont rapport�es :
+.TP
+0
+aucune erreur ne s'est produit.
+.TP
+\-1
+op�ration non support�e (
+.I xxd \-r \-i
+reste impossible).
+.TP
+1
+erreur lors de l'analyse des options.
+.TP
+2
+probl�me avec le fichier d'entr�e.
+.TP
+3
+probl�me avec le fichier de sortie.
+.TP
+4, 5
+la position sp�cifi�e n'est pas atteignable.
+.SH VOIR AUSSI
+uuencode(1), uudecode(1), patch(1)
+.SH AVERTISSEMENTS
+L'�tranget� de cet outil refl�te celle du cerveau de ses cr�ateurs.
+Utilisez cet outil � vos risques et p�rils. Dupliquez vos fichiers.
+Surveillez l'outil. Devenez un gourou.
+.SH VERSION
+Cette page de manuel documente la version 1.7 de xxd.
+.SH AUTEUR
+(c) 1990-1997 par Juergen Weigert
+.br
+<jnweiger@informatik.uni-erlangen.de>
+.LP
+"Distribute freely and credit me,
+.br
+make money and share with me,
+.br
+lose money and don't ask me."
+.PP
+Distribution libre en citant l'auteur,
+.br
+gagnez de l'argent, pensez � moi,
+.br
+perdez de l'argent, oubliez-moi.
+.PP
+Page de manuel d�but�e par Tony Nugent
+.br
+<tony@sctnugen.ppp.gu.edu.au> <T.Nugent@sct.gu.edu.au>
+.br
+Modifications mineures par Bram Moolenaar.
+�dit� par Juergen Weigert.
+.SH TRADUCTION
+Cette page de manuel a �t� traduite par David Blanchet
+<david.blanchet@free.fr> 2004-12-24.
+Mise � jour 2013-05-10, Dominique Pell� <dominique.pelle@gmail.com>

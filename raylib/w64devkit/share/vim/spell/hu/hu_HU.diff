@@ -1,0 +1,183 @@
+*** hu_HU.orig.aff	Wed Apr 12 12:33:23 2006
+--- hu_HU.aff	Wed Apr 12 12:43:39 2006
+***************
+*** 58,60 ****
+  NAME Magyar Ispell helyes�r�si sz�t�r
+! LANG hu_HU
+  HOME http://magyarispell.sourceforge.net
+--- 58,60 ----
+  NAME Magyar Ispell helyes�r�si sz�t�r
+! #LANG hu_HU
+  HOME http://magyarispell.sourceforge.net
+***************
+*** 64,77 ****
+  COMPOUNDMIN 2
+! COMPOUNDFLAG Y
+! COMPOUNDWORD 2 y
+! COMPOUNDSYLLABLE 6 a�e�i�o���u���
+! SYLLABLENUM klmc
+! COMPOUNDFIRST v
+! COMPOUNDLAST x
+! FORBIDDENWORD w
+! ONLYROOT u
+! ACCENT ��������� aeiooouuu
+! CHECKNUM
+! WORDCHARS -.�%�0123456789
+! HU_KOTOHANGZO Z
+  
+--- 64,115 ----
+  COMPOUNDMIN 2
+! #COMPOUNDWORD 2 y
+! COMPOUNDWORDMAX 2
+! COMPOUNDROOT y
+! 
+! #COMPOUNDSYLLABLE 6 a�e�i�o���u���
+! COMPOUNDSYLMAX 6
+! SYLLABLE a/�/e/�/i/�/o/�/�/�/u/�/�/�
+! # Strange that every vowel is counted as a syllable, that's how the hunspell
+! # code works.
+! 
+! # the effect of SYLLABLENUM is not documented
+! #SYLLABLENUM klmc
+! 
+! #COMPOUNDFLAG Y
+! #COMPOUNDFIRST v
+! #COMPOUNDLAST x
+! COMPOUNDRULE Y+
+! COMPOUNDRULE vY*x
+! COMPOUNDRULE Y+x
+! COMPOUNDRULE vY+
+! 
+! #FORBIDDENWORD w
+! BAD w
+! 
+! #ONLYROOT u
+! NEEDAFFIX u
+! 
+! #ACCENT ��������� aeiooouuu
+! MAP 5
+! MAP a��
+! MAP e�
+! MAP i�
+! MAP o���
+! MAP u���
+! 
+! #CHECKNUM
+! # Vim always handles numbers in the same way.
+! 
+! #WORDCHARS -.�%�0123456789
+! FOL �����������������������������������������������������������-�%�
+! LOW �����������������������������������������������������������-�%�
+! UPP �����������������������������������������������������������-�%�
+! MIDWORD .
+! 
+! # Undocumented
+! #HU_KOTOHANGZO Z
+! 
+! # There are soooo many affixes.  Postpone the prefixes to keep the time needed
+! # for generating the .spl within reasonable limits.
+! PFXPOSTPONE
+  
+***************
+*** 81,96 ****
+  
+! REP 89
+! REP � i
+! REP i �
+! REP � o
+! REP o �
+! REP o �
+! REP � u
+! REP u �
+! REP u �
+! REP � �
+! REP � �
+  REP j ly
+  REP ly j
+- REP a � # Handel->H�ndel
+  REP S � # Skoda->�koda
+--- 119,123 ----
+  
+! REP 78
+  REP j ly
+  REP ly j
+  REP S � # Skoda->�koda
+***************
+*** 173,241 ****
+  
+- # character conversion table
+- # (HTML latin-1 entities -> latin-2)
+- # not implemented yet
+- 
+- CHR HTML 35
+- CHR HTML &curren; �
+- CHR HTML &deg; �
+- CHR HTML &acute; �
+- CHR HTML &cedil; �
+- CHR HTML &Aacute; �
+- CHR HTML &Acirc; �
+- CHR HTML &Auml; �
+- CHR HTML &Ccedil; �
+- CHR HTML &Eacute; �
+- CHR HTML &Euml; �
+- CHR HTML &Iacute; �
+- CHR HTML &Icirc; �
+- CHR HTML &Oacute; �
+- CHR HTML &Ocirc; �
+- CHR HTML &Ouml; �
+- CHR HTML &times; �
+- CHR HTML &Uacute; �
+- CHR HTML &Uuml; �
+- CHR HTML &Yacute; �
+- CHR HTML &szlig; �
+- CHR HTML &aacute; �
+- CHR HTML &acirc; �
+- CHR HTML &auml; �
+- CHR HTML &ccedil; �
+- CHR HTML &eacute; �
+- CHR HTML &euml; �
+- CHR HTML &iacute; �
+- CHR HTML &icirc; �
+- CHR HTML &oacute; �
+- CHR HTML &ocirc; �
+- CHR HTML &ouml; �
+- CHR HTML &divide; �
+- CHR HTML &uacute; �
+- CHR HTML &uuml; �
+- CHR HTML &yacute; �
+- 
+- # character conversion table
+- # (Pr�sz�ky-code -> latin-2)
+- # not implemented yet
+- 
+- CHR 123 20
+- CHR 123 a1 �
+- CHR 123 e1 �
+- CHR 123 e2 �
+- CHR 123 i1 �
+- CHR 123 o1 �
+- CHR 123 o2 �
+- CHR 123 o3 �
+- CHR 123 u1 �
+- CHR 123 u2 �
+- CHR 123 u3 �
+- CHR 123 A1 �
+- CHR 123 E1 �
+- CHR 123 E2 �
+- CHR 123 I1 �
+- CHR 123 O1 �
+- CHR 123 O2 �
+- CHR 123 O3 �
+- CHR 123 U1 �
+- CHR 123 U2 �
+- CHR 123 U3 �
+- 
+  SFX z Y 6
+--- 200,201 ----
+***************
+*** 17678,17681 ****
+  PFX D   0    leg          .
+- 
+-    1
+- 
+--- 17638 ----

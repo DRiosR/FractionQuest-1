@@ -1,0 +1,50 @@
+SET ISO8859-1
+TRY esianrtolcdugmphbyfvkwjkqxz-������������'ESIANRTOLCDUGMPHBYFVKWJKQXZ
+
+FOL  ��������������������������������
+LOW  ��������������������������������
+UPP  ��������������������������������
+
+SOFOFROM abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ�������������������������������������������������������������޿
+SOFOTO   ebctefghejklnnepkrstevvkesebctefghejklnnepkrstevvkeseeeeeeeceeeeeeeedneeeeeeeeeeepseeeeeeeeceeeeeeeedneeeeeeeeeeep?
+
+MIDWORD	'-
+
+PFXPOSTPONE
+
+COMPOUNDFLAG x
+COMPOUNDMIN 5
+
+KEEPCASE =
+RARE ?
+BAD !
+
+MAP 9
+MAP a������
+MAP e����
+MAP i����
+MAP o�����
+MAP u����
+MAP n�
+MAP c�
+MAP y��
+MAP s�
+
+PFX A Y 1
+PFX A 0 aan .
+
+PFX B N 1
+PFX B 0 be .
+
+PFX C Y 1
+PFX C a in aa
+
+SFX J N 1
+SFX J 0 tje [aeiou][aeiou]
+
+SFX Z N 1
+SFX Z af ven aaf
+
+REP 2
+REP g ch
+REP cht gd

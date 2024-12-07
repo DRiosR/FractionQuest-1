@@ -1,0 +1,25 @@
+*** nn_NO.orig.aff	Wed Aug 31 18:40:26 2005
+--- nn_NO.aff	Wed Aug 31 18:42:00 2005
+***************
+*** 7,8 ****
+--- 7,26 ----
+  
++ FOL  ��������������������������������
++ LOW  ��������������������������������
++ UPP  ��������������������������������
++ 
++ SOFOFROM abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ�������������������������������������������������������������޿
++ SOFOTO   ebctefghejklnnepkrstevvkesebctefghejklnnepkrstevvkeseeeeeeeceeeeeeeedneeeeeeeeeeepseeeeeeeeceeeeeeeedneeeeeeeeeeep?
++ 
++ MAP 9
++ MAP a������
++ MAP e����
++ MAP i����
++ MAP o�����
++ MAP u����
++ MAP n�
++ MAP c�
++ MAP y��
++ MAP s�
++ 
+  PFX a Y 1

@@ -1,0 +1,38 @@
+*** es_ES.orig.aff	Fri Apr 21 10:57:12 2006
+--- es_ES.aff	Fri Apr 21 11:10:16 2006
+***************
+*** 4,5 ****
+--- 4,12 ----
+  
++ FOL  ��������������������������������
++ LOW  ��������������������������������
++ UPP  ��������������������������������
++ 
++ SOFOFROM abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ�������������������������������������������������������������޿
++ SOFOTO   ebctefghejklnnepkrstevvkesebctefghejklnnepkrstevvkeseeeeeeeceeeeeeeedneeeeeeeeeeepseeeeeeeeceeeeeeeedneeeeeeeeeeep?
++ 
+  REP 20
+***************
+*** 26,33 ****
+  
+! MAP 5
+! MAP a�A�
+! MAP e�E�
+! MAP i�I�
+! MAP o�O�
+! MAP u��U��
+  PFX a Y 2
+--- 33,45 ----
+  
+! MAP 9
+! MAP a������
+! MAP e����
+! MAP i����
+! MAP o�����
+! MAP u����
+! MAP n�
+! MAP c�
+! MAP y��
+! MAP s�
+! 
+  PFX a Y 2

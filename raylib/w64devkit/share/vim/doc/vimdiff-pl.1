@@ -1,0 +1,46 @@
+.TH VIMDIFF 1 "2001 Mar 30"
+.SH NAZWA
+vimdiff \- edytuj dwie, trzy lub cztery wersje pliku w Vimie i zobacz r�nice
+.SH SYNOPSIS
+.br
+.B vimdiff
+[opcje] plik1 plik2 [plik3 [plik4]]
+.PP
+.B gvimdiff
+.SH OPIS
+.B Vimdiff
+uruchomi
+.B Vima
+z dwoma (trzema lub czterema plikami), ka�dy z nich we w�asnym oknie.
+R�nice mi�dzy plikami zostan� pod�wietlone.
+Jest to dobry spos�b by przeanalizowa� r�nice i przenie�� zmiany z jednej
+wersji pliku do innej.
+.PP
+Zobacz vim(1) by pozna� wi�cej szczeg��w o samym Vimie.
+.PP
+Kiedy uruchomiony jako
+.B gvimdiff
+zostanie uruchomione GUI (je�li dost�pne).
+.PP
+W ka�dym oknie zostanie ustawiona opcja 'diff', kt�ra spowoduje
+pod�wietlenie r�nic.
+.br
+Opcje 'wrap' i 'scrollbind' zostan� ustawione by tekst si�
+wygodnie przegl�da�o.
+.br
+Opcja 'foldmethod' zostanie ustawiona na "diff", dzi�ki czemu
+niezmienione linie zostan� zwini�te. 'foldcolumn' b�dzie r�wne 2 aby
+�atwo wyszukiwa�, otwiera� i zamyka� zwini�cia.
+.SH OPCJE
+Pionowy podzia� zostanie u�yty do wyr�wnania linii, tak jakby u�yto
+opcji "\-O". Aby uzyska� poziomy podzia� u�yj opcji "\-o".
+.PP
+Aby pozna� inne opcje zobacz vim(1).
+.SH ZOBACZ TAK�E
+vim(1)
+.SH AUTOR
+Wi�kszo��
+.B Vima
+zosta�a napisana przez Brama Moolenaara przy pomocy wielu innych os�b.
+Zobacz ":help credits w
+.B Vimie.
