@@ -124,10 +124,15 @@ void GuardarPartida2();
 void GuardarPartida3();
 void VolverMenu();
 // SELECCIOANR CURSOR
-//void ClickAccionCursor(float x_inicial, float x_final, float y_inicial, float y_final, Texture2D nuevoCursor);
-bool IsMouseInside(float x_inicial, float y_inicial, float x_final, float y_final) ;
-
-void DibujarCursorYDesbloqueo(Texture2D cursor, Texture2D bloqueo, float x1, float y1, float x2, float y2, int contador_skin, const char *mensaje, Texture2D cursor_destino);
+void seleccionarCursor1();
+void seleccionarCursor2();
+void seleccionarCursor3();
+void seleccionarCursor4();
+void seleccionarCursor5();
+void seleccionarCursor6();
+void regresarAlMenu();
+void mutearDesmutearMusica();
+void ClickConDesbloqueo(float x_inicial, float x_final, float y_inicial, float y_final, int contador_skin, void (*action)(), Texture2D bloqueo_de_cursor, const char *mensaje_bloqueo);
 void CargarCursores();
 // TUTORIAL
 void CargarTexturasTutorial();
@@ -141,11 +146,7 @@ void accionInicio();
 void ManejarEscena(Escena *escenaActual, int escenaId, Texture2D *fondoActual, Texture2D fondoInicial, Texture2D fondoAlternativo1, Texture2D fondoAlternativo2, const char *rutaFondoReinicio, Texture2D cursor, void (*finalizarJuego)());
 //
 void CargarPartida(char *nombre_archivo, float x_inicial, float x_final, float y_inicial, float y_final);
-// PREGUNTA SI QUIERES HACER EL TUTORIAL
-void IrATutorial();
-void IrANiveles();
-//
-void ManejarNivel(int nivel, float x_inicial, float x_final, float y_inicial, float y_final, int contador, int nivel_requerido, const char *texto_bloqueado, float texto_x, float texto_y, Texture2D candados_de_niveles);
+
 
 int main(void)
 {
@@ -277,75 +278,41 @@ int main(void)
         {
             while (escenaActual == SELECCION_DE_CURSOR)
             {
-      ClearBackground(BLACK);
-    DrawTexture(Fondo_de_cursores, 0, 0, WHITE);
-    UpdateMusicStream(music);
-    DrawTexture(sonido, 1770, 10, WHITE);
+                ClearBackground(BLACK);
+                DrawTexture(Fondo_de_cursores, 0, 0, WHITE);
+                UpdateMusicStream(music);
+                DrawTexture(sonido, 1770, 10, WHITE);
 
-    // Definición de las áreas de clic para cada nivel
-    if (IsMouseInside(202.5, 72.9, 458.5, 328.9)) {
-        cursor = cursor1;
-    }
+                // Clic para seleccionar cursores
+                ClickAccion(202.5, 458.5, 72.9, 328.9, seleccionarCursor1);
 
-    if (contador_1_skin == 1) {
-        DibujarCursorYDesbloqueo(cursor2, bloqueo_de_cursores, 647.8, 73.9, 903.8, 328.9, contador_1_skin, "Se desbloquea completando\n\nel %100 del nivel 1", cursor2);
-    } else {
-        DrawTexture(bloqueo_de_cursores, 648.8, 73.9, BLACK);
-        DrawText("Se desbloquea completando\n\nel %100 del nivel 1", 643, 163, 20, WHITE);
-    }
+                ClickConDesbloqueo(647.8, 903.8, 72.9, 328.9, contador_1_skin, seleccionarCursor2, bloqueo_de_cursores, "Se desbloquea completando\n\n      el %100 del nivel 1");
+                ClickConDesbloqueo(202.5, 458.5, 412.1, 668.1, contador_2_skin, seleccionarCursor3, bloqueo_de_cursores, "Se desbloquea completando\n\n       el %100 del nivel 2");
+                ClickConDesbloqueo(647.8, 903.8, 412.1, 668.1, contador_3_skin, seleccionarCursor4, bloqueo_de_cursores, "Se desbloquea completando\n\n       el %100 del nivel 3");
+                ClickConDesbloqueo(202.5, 458.5, 751.1, 1007.1, contador_4_skin, seleccionarCursor5, bloqueo_de_cursores, "Se desbloquea completando\n\n       el %100 del nivel 4");
 
-    if (contador_2_skin == 1) {
-        DibujarCursorYDesbloqueo(cursor3, bloqueo_de_cursores, 202.5, 412.1, 458.5, 668.1, contador_2_skin, "Se desbloquea completando\n\nel %100 del nivel 2", cursor3);
-    } else {
-        DrawTexture(bloqueo_de_cursores, 203.5, 412.1, BLACK);
-        DrawText("Se desbloquea completando\n\nel %100 del nivel 2", 189, 508, 20, WHITE);
-    }
+                int cursor_final = contador_1_skin + contador_2_skin + contador_3_skin + contador_4_skin;
+                if (cursor_final == 4)
+                {
+                    ClickAccion(1301.9, 1558.9, 412, 668, seleccionarCursor6);
+                }
+                else
+                {
+                    DrawTexture(bloqueo_de_cursores, 1302.8, 412, BLACK);
+                    DrawText("Se desbloquea completando\n\n al %100 todos los niveles", 1296.8, 512, 20, WHITE);
+                }
 
-    if (contador_3_skin == 1) {
-        DibujarCursorYDesbloqueo(cursor4, bloqueo_de_cursores, 647.8, 412.1, 903.8, 668.1, contador_3_skin, "Se desbloquea completando\n\nel %100 del nivel 3", cursor4);
-    } else {
-        DrawTexture(bloqueo_de_cursores, 648.8, 412.1, BLACK);
-        DrawText("Se desbloquea completando\n\nel %100 del nivel 3", 643, 508, 20, WHITE);
-    }
+                // Acción de regreso al menú
+                ClickAccion(21.3, 149.3, 24, 140.3, regresarAlMenu);
 
-    if (contador_4_skin == 1) {
-        DibujarCursorYDesbloqueo(cursor5, bloqueo_de_cursores, 202.5, 751.1, 458.5, 1007.1, contador_4_skin, "Se desbloquea completando\n\nel %100 del nivel 4", cursor5);
-    } else {
-        DrawTexture(bloqueo_de_cursores, 202.5, 751.1, BLACK);
-        DrawText("Se desbloquea completando\n\nel %100 del nivel 4", 194.5, 851.1, 20, WHITE);
-    }
+                // Acción de mutear/desmutear música
+                mutearDesmutearMusica();
 
-    // Verificar si todos los niveles están desbloqueados
-    cursor_final = contador_1_skin + contador_2_skin + contador_3_skin + contador_4_skin;
-    if (cursor_final == 4) {
-        if (IsMouseInside(1301.9, 412, 1558.9, 668)) {
-            cursor = cursor6;
-        }
-    } else {
-        DrawTexture(bloqueo_de_cursores, 1302.8, 412, BLACK);
-        DrawText("Se desbloquea completando\n\nal %100 todos los niveles", 1296.8, 512, 20, WHITE);
-    }
+                // Dibuja el cursor actual y finaliza el juego
+                DrawTexture(cursor, GetMouseX(), GetMouseY(), WHITE);
+                finalizar_juego();
 
-    // Verificar si la tecla para regresar al menú es presionada
-    if (IsKeyPressed(KEY_J)) {
-        escenaActual = MENU;
-    }
-
-    // Verificar clic para regresar al menú
-    if (IsMouseInside(21.3, 24, 149.3, 140.3)) {
-        escenaActual = MENU;
-    }
-
-    // Control de música
-    musica_mutear_desmutear();
-    
-    // Dibuja el cursor actual en la posición del mouse
-    DrawTexture(cursor, GetMouseX(), GetMouseY(), WHITE);
-
-    // Finaliza el juego (si corresponde)
-    finalizar_juego();
-    
-    EndDrawing();
+                EndDrawing();
             }
         }
         break;
@@ -438,42 +405,163 @@ int main(void)
                 UpdateMusicStream(music);
                 DrawTexture(sonido, 1770, 10, BLACK);
 
-                ClickAccion(680.9, 875.9, 591.7, 792.1, IrATutorial);
-                ClickAccion(1037, 1232, 591.7, 787.7, IrANiveles);
+                const int click_menudesalida_si_x_inicial = 680.9;
+                const int click_menudesalida_si_x_final = 875.9;
+                const int click_menudesalida_si_y_inicial = 591.7;
+                const int click_menudesalida_si_y_final = 792.1;
 
+                const int click_menudesalida_no_x_inicial = 1037;
+                const int click_menudesalida_no_x_final = 1232;
+                const int click_menudesalida_no_y_inicial = 591.7;
+                const int click_menudesalida_no_y_final = 787.7;
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                {
+                    Vector2 mousePosition = GetMousePosition();
+                    if (mousePosition.x >= click_menudesalida_si_x_inicial && mousePosition.x <= click_menudesalida_si_x_final &&
+                        mousePosition.y >= click_menudesalida_si_y_inicial && mousePosition.y <= click_menudesalida_si_y_final)
+                    {
+                        escenaActual = TUTORIAL;
+                        verificador_de_pregunta_de_tutorial = 1;
+                    }
+                    if (mousePosition.x >= click_menudesalida_no_x_inicial && mousePosition.x <= click_menudesalida_no_x_final &&
+                        mousePosition.y >= click_menudesalida_no_y_inicial && mousePosition.y <= click_menudesalida_no_y_final)
+                    {
+                        escenaActual = NIVELES;
+                        verificador_de_pregunta_de_tutorial = 1;
+                    }
+                }
                 musica_mutear_desmutear();
                 DrawTexture(cursor, GetMouseX(), GetMouseY(), WHITE);
                 finalizar_juego();
                 EndDrawing();
             }
+            // Guardar el progreso actualizado
         }
         break;
         case NIVELES:
         {
 
-            ClearBackground(BLACK);
-            DrawTexture(Fondo_de_niveles, 0, 0, WHITE);
-            UpdateMusicStream(music);
+            while (escenaActual == NIVELES)
+            {
+                ClearBackground(BLACK);
+                DrawTexture(Fondo_de_niveles, 0, 0, WHITE);
+                UpdateMusicStream(music);
 
-            DrawTexture(sonido, 1770, 10, WHITE);
+                DrawTexture(sonido, 1770, 10, WHITE);
 
-            // Manejar cada nivel con las mismas posiciones originales
-            ManejarNivel(1, 139.5, 395.5, 378, 634, contador_1, 0, "", 0, 0, candados_de_niveles);
-            ManejarNivel(2, 578.5, 834.5, 378, 634, contador_2, 1, "Se desbloquea completando\n\n      el %80 del nivel 1", 530, 289.4, candados_de_niveles);
-            ManejarNivel(3, 1017.5, 1273.5, 378, 634, contador_3, 2, "Se desbloquea completando\n\n       el %80 del nivel 2", 930, 289.4, candados_de_niveles);
-            ManejarNivel(4, 1456.5, 1712.5, 378, 634, contador_4, 3, "Se desbloquea completando\n\n       el %80 del nivel 3", 1370, 289.4, candados_de_niveles);
+                DrawText(TextFormat("%d/5", contador_1), (ancho_pantalla / 2) - 738, (alto_pantalla / 2) - 212, 50, WHITE);
+                const int click_nivel1_x_inicial = 139.5;
+                const int click_nivel1_x_final = 395.5;
+                const int click_nivel1_y_inicial = 378;
+                const int click_nivel1_y_final = 634;
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                {
+                    Vector2 mousePosition = GetMousePosition();
+                    if (mousePosition.x >= click_nivel1_x_inicial && mousePosition.x <= click_nivel1_x_final &&
+                        mousePosition.y >= click_nivel1_y_inicial && mousePosition.y <= click_nivel1_y_final)
+                    {
+                        escenaActual = NIVEL1;
+                    }
+                }
+                if (nivel_del_usuario >= 1)
+                {
+                    DrawText(TextFormat("%d/5", contador_2), (ancho_pantalla / 2) - 300, (alto_pantalla / 2) - 212, 50, WHITE);
+                    const int click_nivel2_x_inicial = 578.5;
+                    const int click_nivel2_x_final = 834.5;
+                    const int click_nivel2_y_inicial = 378;
+                    const int click_nivel2_y_final = 634;
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        Vector2 mousePosition = GetMousePosition();
+                        if (mousePosition.x >= click_nivel2_x_inicial && mousePosition.x <= click_nivel2_x_final &&
+                            mousePosition.y >= click_nivel2_y_inicial && mousePosition.y <= click_nivel2_y_final)
+                        {
+                            escenaActual = NIVEL2;
+                        }
+                    }
+                }
+                else
+                {
+                    if (nivel_del_usuario == 0)
+                    {
+                        DrawText("Se des22222222222loquea completando\n\n      el %80 del nivel 1", 530, 289.4, 30, WHITE);
+                    }
+                    DrawTexture(candados_de_niveles, 626, 397.6, BLACK);
+                }
+                if (nivel_del_usuario >= 2)
+                {
+                    DrawText(TextFormat("%d/5", contador_3), (ancho_pantalla / 2) + 140, (alto_pantalla / 2) - 212, 50, WHITE);
+                    const int click_nivel3_x_inicial = 1017.5;
+                    const int click_nivel3_x_final = 1273.5;
+                    const int click_nivel3_y_inicial = 378;
+                    const int click_nivel3_y_final = 634;
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        Vector2 mousePosition = GetMousePosition();
+                        if (mousePosition.x >= click_nivel3_x_inicial && mousePosition.x <= click_nivel3_x_final &&
+                            mousePosition.y >= click_nivel3_y_inicial && mousePosition.y <= click_nivel3_y_final)
+                        {
+                            escenaActual = NIVEL3;
+                        }
+                    }
+                }
+                else
+                {
+                    if (nivel_del_usuario == 1)
+                    {
+                        DrawText("Se desbloquea completando\n\n       el %80 del nivel 2", 930, 289.4, 30, WHITE);
+                    }
+                    DrawTexture(candados_de_niveles, 1065.5, 397.6, BLACK);
+                }
+                if (nivel_del_usuario >= 3)
+                {
+                    DrawText(TextFormat("%d/5", contador_4), (ancho_pantalla / 2) + 582, (alto_pantalla / 2) - 212, 50, WHITE);
+                    const int click_nivel4_x_inicial = 1456.5;
+                    const int click_nivel4_x_final = 1712.5;
+                    const int click_nivel4_y_inicial = 378;
+                    const int click_nivel4_y_final = 634;
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        Vector2 mousePosition = GetMousePosition();
+                        if (mousePosition.x >= click_nivel4_x_inicial && mousePosition.x <= click_nivel4_x_final &&
+                            mousePosition.y >= click_nivel4_y_inicial && mousePosition.y <= click_nivel4_y_final)
+                        {
+                            escenaActual = NIVEL4;
+                        }
+                    }
+                }
+                else
+                {
+                    if (nivel_del_usuario == 2)
+                    {
+                        DrawText("Se desbloquea completando\n\n       el %80 del nivel 3", 1370, 289.4, 30, WHITE);
+                    }
+                    DrawTexture(candados_de_niveles, 1507.8, 397.6, BLACK);
+                }
 
-            // Botón para volver al menú
-            void IrAMenu() { escenaActual = MENU; }
-            if (IsKeyPressed(KEY_J))
-                IrAMenu();
-            ClickAccion(21.3, 149.3, 24, 140.3, IrAMenu);
+                if (IsKeyPressed(KEY_J))
+                {
+                    escenaActual = MENU;
+                }
+                const int click_home_x_inicial = 21.3;
+                const int click_home_x_final = 149.3;
+                const int click_home_y_inicial = 24;
+                const int click_home_y_final = 140.3;
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                {
+                    Vector2 mousePosition = GetMousePosition();
+                    if (mousePosition.x >= click_home_x_inicial && mousePosition.x <= click_home_x_final &&
+                        mousePosition.y >= click_home_y_inicial && mousePosition.y <= click_home_y_final)
+                    {
+                        escenaActual = MENU;
+                    }
+                }
+                musica_mutear_desmutear();
+                DrawTexture(cursor, GetMouseX(), GetMouseY(), WHITE);
 
-            musica_mutear_desmutear();
-            DrawTexture(cursor, GetMouseX(), GetMouseY(), WHITE);
-
-            finalizar_juego();
-            EndDrawing();
+                finalizar_juego();
+                EndDrawing();
+            }
         }
         break;
         case SALIR:
@@ -2654,40 +2742,56 @@ void VolverMenu()
     escenaActual = MENU;
 }
 
-// void ClickAccionCursor(float x_inicial, float x_final, float y_inicial, float y_final, Texture2D nuevoCursor)
-// {
-//     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-//     {
-//         Vector2 mousePosition = GetMousePosition();
-//         if (mousePosition.x >= x_inicial && mousePosition.x <= x_final &&
-//             mousePosition.y >= y_inicial && mousePosition.y <= y_final)
-//         {
-//             cursor = nuevoCursor;  // Asignamos el nuevo cursor
-//             cursorCambiado = true; // Marcamos que el cursor ha sido cambiado
-//         }
-//     }
-
-//     // Si el cursor ya fue cambiado, lo mantenemos hasta que ocurra otro clic
-//     if (cursorCambiado && !IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-//     {
-//         cursorCambiado = false; // Reseteamos la bandera cuando se deja de presionar el mouse
-//     }
-// }
-bool IsMouseInside(float x_inicial, float y_inicial, float x_final, float y_final) {
-    Vector2 mousePosition = GetMousePosition();
-    return (mousePosition.x >= x_inicial && mousePosition.x <= x_final &&
-            mousePosition.y >= y_inicial && mousePosition.y <= y_final);
+void seleccionarCursor1()
+{
+    cursor = cursor1;
 }
-void DibujarCursorYDesbloqueo(Texture2D cursor, Texture2D bloqueo, float x1, float y1, float x2, float y2, int contador_skin, const char *mensaje, Texture2D cursor_destino)
+
+void seleccionarCursor2()
+{
+    cursor = cursor2;
+}
+
+void seleccionarCursor3()
+{
+    cursor = cursor3;
+}
+
+void seleccionarCursor4()
+{
+    cursor = cursor4;
+}
+
+void seleccionarCursor5()
+{
+    cursor = cursor5;
+}
+
+void seleccionarCursor6()
+{
+    cursor = cursor6;
+}
+
+void regresarAlMenu()
+{
+    escenaActual = MENU;
+}
+
+void mutearDesmutearMusica()
+{
+    musica_mutear_desmutear();
+}
+
+void ClickConDesbloqueo(float x_inicial, float x_final, float y_inicial, float y_final, int contador_skin, void (*action)(), Texture2D bloqueo_de_cursor, const char *mensaje_bloqueo)
 {
     if (contador_skin == 1)
     {
-        DrawTexture(cursor_destino, x1, y1, WHITE);  // Dibuja el cursor desbloqueado
+        ClickAccion(x_inicial, x_final, y_inicial, y_final, action);
     }
     else
     {
-        DrawTexture(bloqueo, x1, y1, BLACK);  // Dibuja el bloqueo
-        DrawText(mensaje, x1 - 5, y1 + 90, 20, WHITE);  // Muestra el mensaje de desbloqueo
+        DrawTexture(bloqueo_de_cursor, x_inicial, y_inicial, BLACK);
+        DrawText(mensaje_bloqueo, x_inicial - 10, y_inicial + 90, 20, WHITE);
     }
 }
 
@@ -2823,68 +2927,6 @@ void CargarPartida(char *nombre_archivo, float x_inicial, float x_final, float y
         {
             cargarprogreso(nombre_archivo, &nivel_del_usuario, &contador_1, &contador_1_skin, &contador_2, &contador_2_skin, &contador_3, &contador_3_skin, &contador_4, &contador_4_skin, &cursor_final, &verificador_de_pregunta_de_tutorial);
             MostrarCargandoProgreso();
-        }
-    }
-}
-
-void IrATutorial()
-{
-    escenaActual = TUTORIAL;
-    verificador_de_pregunta_de_tutorial = 1;
-}
-
-void IrANiveles()
-{
-    escenaActual = NIVELES;
-    verificador_de_pregunta_de_tutorial = 1;
-}
-void ManejarNivel(int nivel, float x_inicial, float x_final, float y_inicial, float y_final,
-                  int contador, int nivel_requerido, const char *texto_bloqueado,
-                  float texto_x, float texto_y, Texture2D candados_de_niveles)
-{
-    if (nivel_del_usuario >= nivel_requerido)
-    {
-        // Dibujar contador solo si el nivel está desbloqueado
-        switch (nivel)
-        {
-        case 1:
-            DrawText(TextFormat("%d/5", contador), (ancho_pantalla / 2) - 738, (alto_pantalla / 2) - 212, 50, WHITE);
-            break;
-        case 2:
-            DrawText(TextFormat("%d/5", contador), (ancho_pantalla / 2) - 300, (alto_pantalla / 2) - 212, 50, WHITE);
-            break;
-        case 3:
-            DrawText(TextFormat("%d/5", contador), (ancho_pantalla / 2) + 140, (alto_pantalla / 2) - 212, 50, WHITE);
-            break;
-        case 4:
-            DrawText(TextFormat("%d/5", contador), (ancho_pantalla / 2) + 582, (alto_pantalla / 2) - 212, 50, WHITE);
-            break;
-        }
-
-        // Detectar clic para cambiar de nivel
-        void IrANivel() { escenaActual = NIVEL1 + (nivel - 1); }
-        ClickAccion(x_inicial, x_final, y_inicial, y_final, IrANivel);
-    }
-    else
-    {
-        // Dibujar texto bloqueado solo para el siguiente nivel bloqueado
-        if (nivel_del_usuario == (nivel_requerido - 1) && texto_bloqueado[0] != '\0')
-        {
-            DrawText(texto_bloqueado, texto_x, texto_y, 30, WHITE);
-        }
-
-        // Dibujar candado en las posiciones originales
-        switch (nivel)
-        {
-        case 2:
-            DrawTexture(candados_de_niveles, 626, 397.6, BLACK);
-            break;
-        case 3:
-            DrawTexture(candados_de_niveles, 1065.5, 397.6, BLACK);
-            break;
-        case 4:
-            DrawTexture(candados_de_niveles, 1507.8, 397.6, BLACK);
-            break;
         }
     }
 }
